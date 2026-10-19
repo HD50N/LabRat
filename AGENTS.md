@@ -26,6 +26,7 @@ phase. Don't build ahead.
 configs/          one YAML per task (reach.yaml, push.yaml)
 labrat/
   train.py        layer 1: one training run (env, train, evaluate, record)
+  watch.py        play a trained policy live (human use only, not a tool)
   runner.py       layer 2: training runs as subprocesses, run registry, budget
   tools.py        layer 3: functions the agent can call
   agent.py        layer 4: LLM loop, provider adapter, experiment log
@@ -54,7 +55,9 @@ runs/             per-run output, git-ignored
 
 ```bash
 uv sync                                    # install dependencies
-uv run python -m labrat.train configs/reach.yaml   # one training run (Phase 1+)
+uv run python -m labrat.train configs/reach.yaml   # one training run
+uv run python -m labrat.watch runs/<run_id>        # watch a trained policy live
+uv run tensorboard --logdir runs                   # live training curves
 uv run python -m mujoco.viewer --mjcf=.venv/lib/python3.12/site-packages/gymnasium_robotics/envs/assets/fetch/push.xml
 ```
 

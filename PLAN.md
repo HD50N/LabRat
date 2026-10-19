@@ -12,7 +12,11 @@ Status: ✅ done · 🔨 in progress · ⬜ not started
 
 Python 3.12 env (uv), dependencies, API key in `.env`, folder skeleton.
 
-## ⬜ Phase 1: Train one policy by hand
+## ✅ Phase 1: Train one policy by hand
+
+> **Result:** 100% success on 100 eval episodes, 50k steps, 108 s of training.
+> 20k steps (RL Zoo's value) reached only 74% and was still climbing, because
+> RL Zoo also normalizes observations, which we don't yet.
 
 - **Files:** `labrat/train.py`, `configs/reach.yaml`
 - **Build:** FetchReach + SAC + HER, hard-coded. Train, save the model, evaluate

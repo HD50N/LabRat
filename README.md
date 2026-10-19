@@ -11,8 +11,31 @@ until the robot hits the goal or the budget runs out.
 Everything runs in simulation with MuJoCo, so no physical robot is needed and
 a laptop CPU is enough.
 
-> **Status:** early development. Setup is done; the training pipeline
-> (Phase 1) is next. See [plan.md](plan.md) for the full roadmap.
+> **Status:** early development. A single training run works end to end
+> (FetchReach: 100% success in under 2 minutes). Configurable training
+> (Phase 2) is next. See [plan.md](plan.md) for the full roadmap.
+
+## Run one training experiment
+
+```bash
+uv run python -m labrat.train configs/reach.yaml
+```
+
+This trains SAC + HER, evaluates on 100 fresh episodes, and writes
+`runs/<timestamp>-reach/` containing `config.yaml`, `metrics.json`,
+`monitor.csv` (reward curve), `model.zip`, and `rollout.mp4`.
+
+Watch training curves live while it runs (open http://localhost:6006):
+
+```bash
+uv run tensorboard --logdir runs
+```
+
+Watch a trained policy live in a MuJoCo window:
+
+```bash
+uv run python -m labrat.watch runs/<run_id>
+```
 
 ## How it will work
 
@@ -70,6 +93,7 @@ Both come from [Gymnasium-Robotics](https://robotics.farama.org/).
 configs/          one YAML per task
 labrat/
   train.py        one training run: env, train, evaluate, record
+  watch.py        play a trained policy live in a MuJoCo window
   runner.py       runs training as subprocesses, tracks runs, enforces budget
   tools.py        functions the agent can call
   agent.py        the LLM loop and experiment log
