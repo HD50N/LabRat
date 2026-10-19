@@ -6,3 +6,6 @@ wandb/
 outputs/
 multirun/
 .DS_Store
+.env
+.env.*
+!.env.example
